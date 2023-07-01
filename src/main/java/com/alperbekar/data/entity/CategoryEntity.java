@@ -4,12 +4,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 
 @Entity
 @Table(name = "category")
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
+    public static final Long SerialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id",unique = true,nullable = false)
@@ -23,9 +28,9 @@ public class CategoryEntity {
     private Date createdDate;
 
     // Relation
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "blog_id",nullable = false)
-    BlogEntity blogEntity;
+
+    @OneToMany(mappedBy = "categoryEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    List<BlogEntity> blogEntityList;
 
     // Parametresiz Constructor
     public CategoryEntity() {

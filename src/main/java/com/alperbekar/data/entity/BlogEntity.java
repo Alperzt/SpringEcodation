@@ -32,8 +32,9 @@ public class BlogEntity implements Serializable {
     private Date createdDate;
 
     // Relation
-    @OneToMany(mappedBy = "blogEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    List<CategoryEntity> categoryEntityList;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "category_id",nullable = false)
+    CategoryEntity categoryEntity;
 
     // Parametresiz Constructor
     public BlogEntity() {
